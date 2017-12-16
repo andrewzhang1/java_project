@@ -1,0 +1,71 @@
+package edu.ucsc.extension.webapptesting.class10;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import com.google.common.io.Files;
+
+public class VideoTest {
+	private WebDriver driver;
+	
+	@Before
+	public void setUp() {
+		System.setProperty(
+				"webdriver.chrome.driver", 
+				"./drivers/chromedriver.exe"
+				);
+		driver = new ChromeDriver();
+	}
+	
+	@After
+	public void tearDown() {
+		driver.quit();	
+	}
+	
+	@Test
+	public void testMetadata() {
+		driver.get("http://10.20.8.162:8080/workspace/video.html");
+		
+		WebElement videoPlayer = 
+			driver.findElement(By.tagName("video"));
+		
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String src = (String)js.executeScript("return arguments[0].currentSrc", 
+				videoPlayer);
+		assertTrue(src.endsWith("html5_mov.mp4"));
+		int duration = ((Double)js.executeScript("return arguments[0].duration", 
+				videoPlayer)).intValue();
+		assertEquals(10, duration);
+	}
+	
+	@Test
+	public void testPlayandPause() throws InterruptedException, IOException {
+		driver.get("http://10.20.8.162:8080/workspace/video.html");
+		
+		WebElement videoPlayer = 
+			driver.findElement(By.tagName("video"));
+		
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].play()", videoPlayer);
+		Thread.sleep(5000);
+		js.executeScript("arguments[0].pause()", videoPlayer);
+		
+		File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		Files.copy(src, new File("./screenshots/browser.png"));
+		Files.copy(WebElementExtender.captureElementPicture(videoPlayer), new File("./screenshots/video.png"));
+	}
+}

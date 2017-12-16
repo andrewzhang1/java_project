@@ -1,0 +1,12 @@
+package guru99.EditCustomer;
+
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(features = "src/test/resources/guru99/editcustomer.feature", glue = "guru99.EditCustomer")
+public class EditCustomerRunner {
+
+}

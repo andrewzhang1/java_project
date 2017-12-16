@@ -1,0 +1,11 @@
+Feature: Customer Edit Feature
+  As a valid customer,
+  I should be able to edit customer
+
+Scenario: Check Customer
+  Given the user has logged in with user id "mngr105729" and password "EzYgUsY"
+  And the user is on the Edit Customer page
+  When he submits "94734" as customer id
+  Then ensure the customer name is "John"
+  And ensure the customer gender is "male"
+  And ensure the customer DoB is "1960-01-01"

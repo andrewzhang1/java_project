@@ -1,0 +1,16 @@
+//package guru99;
+package guru99;
+
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(
+		features = "src/test/resources/guru99/login.feature",
+		glue={"guru99"}
+	)
+public class LoginRunner {
+
+}

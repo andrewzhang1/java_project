@@ -1,0 +1,24 @@
+package assignment3;
+
+import static org.junit.Assert.assertTrue;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
+
+public class MonsterHomePage {
+	private WebDriver driver;
+	
+	private String url = "http://www.monster.com/";
+	
+	public MonsterHomePage(WebDriver driver) {
+		this.driver = driver;
+		this.driver.get(url);
+		PageFactory.initElements(driver, this);
+	}
+	
+	public MonsterSearch getSearch() {
+		return new MonsterSearch(driver);
+	}
+
+}

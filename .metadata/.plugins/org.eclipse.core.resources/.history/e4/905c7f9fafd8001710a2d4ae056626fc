@@ -1,0 +1,34 @@
+package assignment3;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
+
+public class MonsterSearchResult {
+	private WebDriver driver;
+	
+	@FindAll({
+		@FindBy(how=How.CSS, using="#resultsWrapper .js_result_container:not(.featured-ad) > .js_result_row")
+	})
+	private List<WebElement> entries;
+	
+	public MonsterSearchResult(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+	}
+
+	public void report() {
+		for (WebElement entry: entries) {
+			System.out.println(entry.findElement(By.cssSelector(".jobTitle h2 span")).getText());
+			System.out.println(entry.findElement(By.cssSelector(".company a span")).getText());
+			System.out.println(entry.findElement(By.cssSelector(".job-specs-location p a")).getText());
+			System.out.println();
+		}
+	}
+}

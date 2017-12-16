@@ -1,0 +1,39 @@
+package guru99.EditCustomer;
+
+
+/*
+
+Web Applications Testing — Assignment 4
+
+Go to Guru99 Bank at http://demo.guru99.com/v4/
+
+My User: mngr105727
+My Password: ytujudu
+
+1. Create your own account
+2. Log in
+3. Manually create a new customer using the New Customer link
+Then, test the following BDD scenario
+In Java
+Scenario: Check Customer
+Given the user has logged in with user id “mngr40773” and password “zybEqeq”
+And the user is on the Edit Customer page
+When he submits “73935” as customer id
+Then ensure the customer name is “John”
+And ensure the customer gender is “male”
+And ensure the customer DoB is “1960-01-01”
+
+ * 
+ * 
+ */
+
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(features = "src/test/resources/guru99/editcustomer2.feature", glue = "guru99.EditCustomer")
+public class EditCustomerRunner {
+
+}

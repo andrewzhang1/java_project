@@ -1,0 +1,53 @@
+package edu.ucsc.extension.webapptesting.class10;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.internal.WrapsDriver;
+
+public class InputtableTest {
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty(
+				"webdriver.chrome.driver", 
+				"./drivers/chromedriver.exe"
+			);
+		WebDriver driver = new ChromeDriver();
+		driver.get("http://10.20.8.162:8080/workspace/inputtable.html");
+		
+		WebTable table = new WebTable(
+			driver.findElement(By.tagName("table"))
+		);
+		
+		WebElement currCell = table.getElementInsideCellElement(1, 1);
+		WebElementExtender.highlightElement(currCell);
+		currCell.sendKeys("John");
+		currCell = table.getElementInsideCellElement(2, 3);
+		WebElementExtender.highlightElement(currCell);
+		currCell.sendKeys("Jack");
+		currCell = table.getElementInsideCellElement(4, 2);
+		WebElementExtender.highlightElement(currCell);
+		currCell.sendKeys("Jason");
+	}
+}
+
+class WebTable {
+	private WebElement table;
+	
+	public WebTable(WebElement table) {
+		this.table = table;
+	}
+	
+	public WebElement getElementInsideCellElement(int row, int col) {
+		try {
+			WebElement currCell =
+				table.findElement(By.xpath("(.//tr/td/..)[" + row + "]"))
+				.findElement(By.cssSelector("td:nth-child(" + col + ")"));
+			return currCell.findElement(By.xpath("./*"));
+		} catch (NoSuchElementException e) {
+			return null;
+		}
+	}
+}
